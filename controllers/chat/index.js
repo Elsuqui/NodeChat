@@ -9,7 +9,12 @@ const chatProvider = require('@providers/chat');
  * @param {*} res 
  */
 const listChat = (req, res) => {
-    res.send('Chats room list...');   
+    chatProvider.listOfChats((error, chats) => {
+        if(error)
+            res.status(500).send('An error has ocurred');
+        else
+            res.send(chats);
+    });
 }
 
 /**
@@ -19,7 +24,13 @@ const listChat = (req, res) => {
  * @param {*} res 
  */
 const newChat = (req, res) => {
-    res.send('New Chat room');
+    const data = req.body;
+    chatProvider.createChat(data, (error, chat) => {
+        if(error)
+            res.status(500).send('An error has ocurred');
+        else
+            res.send(chat);
+    });
 }
 
 /**
